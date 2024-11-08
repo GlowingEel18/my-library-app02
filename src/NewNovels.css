@@ -1,0 +1,156 @@
+/* src/pages/NewNovels.css */
+
+.new-novels {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .header {
+    background-color: #333;
+    padding: 20px;
+    color: white;
+  }
+  
+  .page-title {
+    font-size: 2em;
+    color: red;
+    margin: 0;
+  }
+  
+  .page-subtitle {
+    font-size: 1em;
+    margin: 10px 0;
+  }
+  
+  .navbar {
+    margin-top: 10px;
+  }
+  
+  .navbar a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+  }
+  
+  .navbar a:hover {
+    text-decoration: underline;
+  }
+  
+  main {
+    padding: 40px 20px;
+  }
+  
+  h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+  
+  .book-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .book-card {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+  }
+  
+  .book-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .book-card h3 {
+    font-size: 1.1em;
+    margin-top: 10px;
+  }
+  
+  .book-card p {
+    font-size: 0.9em;
+    color: #666;
+  }
+  
+  .more-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .more-button:hover {
+    background-color: #555;
+  }
+  
+  .footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  /* src/pages/NewNovels.css */
+
+.new-novels {
+  padding: 20px;
+  text-align: center;
+}
+
+.book-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.book-card {
+  width: 200px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.2s;
+}
+
+.book-card:hover {
+  transform: scale(1.05);
+}
+
+.book-card img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.book-card h3 {
+  font-size: 1.1em;
+  margin-top: 10px;
+}
+
+.more-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.more-button:hover {
+  background-color: #555;
+}

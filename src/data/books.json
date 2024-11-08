@@ -1,0 +1,39 @@
+[
+    {
+      "id": 1,
+      "title": "The Awakening",
+      "image": "/images/TheAwakening.jpg",
+      "genre": "Fiction"
+    },
+    {
+      "id": 2,
+      "title": "To Kill a Mockingbird",
+      "image": "my-library-app/public/images/To Kill a MockingBird.jpg",
+      "genre": "Fiction"
+    },
+    {
+      "id": 3,
+      "title": "Fahrenheit 451",
+      "image": "/images/Fahrenheit.jpg",
+      "genre": "Fiction"
+    },
+    {
+        "id": 4,
+        "title": "Strange Chemistry",
+        "image": "/images/StrangeChemistry.jpg",
+        "genre": "Nonfiction"
+      },
+    {
+      "id": 5,
+      "title": "Gory Details: Adventures from the the Dark Side of Science",
+      "image": "/images/Gory Details.jpg",
+      "genre": "Nonfiction"
+    },
+    {
+        "id": 6,
+        "title": "Periodic Tables",
+        "image": "/images/Periodic Tables.jpg",
+        "genre": "Nonfiction"
+      }
+
+  ]

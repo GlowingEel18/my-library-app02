@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "title": "New Novels",
+    "description": "A fantastic new novel.",
+    "image": "/images/New Novels.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Mystery",
+    "description": "A bestselling mystery.",
+    "image": "/images/Mystery.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Fantasy",
+    "description": "An exciting fantasy.",
+    "image": "/images/Fantasy.jpg"
+  },
+  {
+    "id": 4,
+    "title": "Drama",
+    "description": "A thrilling crime drama.",
+    "image": "/images/Drama.jpg"
+  },
+  {
+    "id": 5,
+    "title": "Fiction",
+    "description": "A gripping historical fiction.",
+    "image": "/images/Fiction2.jpg"
+  },
+  {
+    "id": 6,
+    "title": "Nonfiction",
+    "description": "An inspiring non-fiction.",
+    "image": "public/images/NonFiction2.jpg"
+  },
+  {
+    "id": 7,
+    "title": "Romance",
+    "description": "A heartwarming romance.",
+    "image": "/images/Romance.jpg"
+  },
+  {
+    "id": 8,
+    "title": "Scientific Mystery",
+    "description": "A deep dive into a scientific mystery.",
+    "image": "/images/Scientific Mystery.jpg"
+  },
+  {
+    "id": 9,
+    "title": "Sci-Fi",
+    "description": "An adventurous sci-fi journey.",
+    "image": "/images/Sci-Fi.jpg"
+  },
+  {
+    "id": 10,
+    "title": "Horror",
+    "description": "A terrifying horror story.",
+    "image": "/images/Horror.jpg"
+  }
+]

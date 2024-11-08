@@ -1,0 +1,29 @@
+/* src/components/BookCard.css */
+.book-card {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+  }
+  
+  .book-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .book-image {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .book-title {
+    color: red;
+    margin: 10px 0;
+  }
+  
+  .book-description {
+    color: #555;
+  }
+  

@@ -1,0 +1,28 @@
+/* Container styling for the items */
+.genre-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* Styling for each item (book/genre card) */
+.genre-card {
+  flex: 1 1 calc(33.333% - 16px); /* 3 items per row on larger screens */
+  max-width: 300px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+/* Media query for single-column layout on smaller screens */
+@media (max-width: 768px) {
+  .genre-card {
+      flex: 1 1 100%; /* Each card takes full width */
+      max-width: 100%; /* Ensures it occupies the entire width */
+  }
+}

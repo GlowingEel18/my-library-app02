@@ -1,0 +1,21 @@
+[
+    {
+      "id": 1,
+      "title": "The Last Kingdom",
+      "description": "A historical novel set in medieval times.",
+      "image": "public/images/The_Last_Kingdom.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Echoes of the Past",
+      "description": "A captivating historical mystery.",
+      "image": "public/images/Echoes_of_the_Past.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Shadows in the Dark",
+      "description": "An intense thriller that will keep you on the edge of your seat.",
+      "image": "images/Fantasy.jpg"
+    }
+  ]
+    

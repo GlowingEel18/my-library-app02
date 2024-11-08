@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "The Girl with the Dragon Tattoo",
+    "author": "Stieg Larsson",
+    "description": "A gripping thriller about the search for a missing girl.",
+    "image": "/images/The_Girl_with_the_Dragon_Tattoo.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Gone Girl",
+    "author": "Gillian Flynn",
+    "description": "A thriller about the secrets of a troubled marriage.",
+    "image": "/images/Gone_Girl.jpg"
+  },
+  {
+    "id": 3,
+    "title": "In the Woods",
+    "author": "Tana French",
+    "description": "A detective mystery set in a small Irish town.",
+    "image": "/images/In_the_Woods.jpg"
+  }
+]
