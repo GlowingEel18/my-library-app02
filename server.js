@@ -3,9 +3,13 @@ const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000; // Render will set process.env.PORT
- 
+
 app.use(cors()); // Enable CORS for all routes
 app.use(express.static('public')); // Serve static files if needed
+
+app.get("/", (req,res) => {
+  res.sendFile(__dirname + "/index.html");
+});
 
 // Sample data route
 app.get('/api/books', (req, res) => {
