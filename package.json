@@ -1,6 +1,6 @@
 {
-    "homepage": "/my-library-app02",
-    "name": "my-library-app02",
+    "homepage": "/my-library-app",
+    "name": "my-library-app",
     "version": "0.1.0",
     "private": false,
     "web-vitals": "^2.1.4",
@@ -32,4 +32,4 @@
     "devDependencies": {
         "gh-pages": "^6.2.0"
     }
-}
+  }
