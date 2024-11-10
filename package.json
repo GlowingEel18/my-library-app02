@@ -31,5 +31,10 @@
     },
     "devDependencies": {
         "gh-pages": "^6.2.0"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.21.1",
+        "install": "^0.13.0"
     }
-  }
+}

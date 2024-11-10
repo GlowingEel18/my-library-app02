@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
+
 const Home = () => {
   const [books, setBooks] = useState([]);
 
@@ -8,7 +9,9 @@ const Home = () => {
     // Define an asynchronous function inside the useEffect to fetch data
     const fetchBooks = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/books/");
+        const response = await axios.get(
+          "http://localhost:3000/api/books/"
+        );
         setBooks(response.data); // Set the fetched data to the books state
       } catch (error) {
         console.error("Error fetching books:", error);
@@ -18,6 +21,7 @@ const Home = () => {
     fetchBooks(); // Call the fetch function
   }, []); // Empty dependency array means this runs once on component mount
 
+  const imageSrc = `https://server-js-81l8.onrender.com/images/${housePlan.main_image}`;
   return (
     <div className="home">
       <h2>Welcome to the Library</h2>
