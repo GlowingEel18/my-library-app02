@@ -1,50 +1,49 @@
 .about-page {
-    text-align: center;
-    background-color: #f8f9fa;
-    padding: 2em;
-  }
-  
-  .about-page h1 {
-    color: #333;
-    font-size: 2em;
-    margin-bottom: 1em;
-  }
-  
-  .about-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .about-card {
-    background-color: #333;
-    color: white;
-    display: center;
-    width: 80%;
-    max-width: 600px;
-    border-radius: 8px;
-    padding: 1.5em;
-    margin: 1em 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: left;
-  }
-  
-  .about-card h2 {
-    font-size: 1.5em;
-    margin-bottom: 0.5em;
-  }
-  
-  .creator-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin: 1em 0;
-    display: center;
-  }
-  
-  .about-card p {
-    font-size: 1em;
-    color: #ddd;
-    line-height: 1.6;
-  }
-  
+  text-align: center;
+  background-color: #f8f9fa;
+  padding: 2em;
+}
+
+.about-page h1 {
+  color: #333;
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+
+.about-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-card {
+  background-color: #333;
+  color: white;
+  display: center;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 8px;
+  padding: 1.5em;
+  margin: 1em 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: left;
+}
+
+.about-card h2 {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.creator-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 1em 0;
+  display: center;
+}
+
+.about-card p {
+  font-size: 1em;
+  color: #ddd;
+  line-height: 1.6;
+}

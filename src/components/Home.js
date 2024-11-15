@@ -1,38 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
-
 const Home = () => {
   const [books, setBooks] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Define an asynchronous function inside the useEffect to fetch data
+    // Fetch books data from the server
     const fetchBooks = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/books/"
+          "https://my-library-backend-scms.onrender.com/api/books"
         );
         setBooks(response.data); // Set the fetched data to the books state
       } catch (error) {
         console.error("Error fetching books:", error);
+        setError("Failed to load books. Please try again later.");
       }
     };
 
-    fetchBooks(); // Call the fetch function
-  }, []); // Empty dependency array means this runs once on component mount
+    fetchBooks();
+  }, []); // Runs once on component mount
 
-  const imageSrc = `https://server-js-81l8.onrender.com/images/${housePlan.main_image}`;
   return (
     <div className="home">
       <h2>Welcome to the Library</h2>
+      {error && <p className="error-message">{error}</p>}
       <div className="book-list">
-        {books.map(book => (
-          <div key={book._id} className="book">
-            <img src={book.img_url} alt={book.title} />
-            <h3>{book.title}</h3>
-            <p>{book.description}</p>
-          </div>
-        ))}
+        {books.length > 0 ? (
+          books.map(book => (
+            <div key={book._id} className="book">
+              <img src={book.img_url} alt={book.title} />
+              <h3>{book.title}</h3>
+              <p>{book.description}</p>
+            </div>
+          ))
+        ) : (
+          !error && <p>Loading books...</p>
+        )}
       </div>
     </div>
   );
