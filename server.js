@@ -1,120 +1,354 @@
 const express = require("express");
-const fileUpload = require("express-fileupload");
 const cors = require("cors");
-const path = require("path");
-const Joi = require("joi"); // Import Joi for validation
-
 const app = express();
-const PORT = process.env.PORT || 3001;
+const Joi = require("joi");
+const multer = require("multer");
+const path = require("path");
 
-// Enable middleware
 app.use(cors());
-app.use(express.json());
-app.use(fileUpload());
-app.use('/images', express.static(path.join(__dirname, 'images')));
-app.use('/uploads', express.static(path.join(__dirname, 'client/public/uploads')));
+app.use(express.json()); // Parse JSON bodies for POST requests
+app.use(express.static("public"));
 
-// Sample book data with all 45 books
-const books = [
-  { id: 1, title: "1984", description: "A dystopian novel by George Orwell.", image_url: "/images/1984.jpg" },
-  { id: 2, title: "Andromeda", description: "A science fiction novel.", image_url: "/images/Andromeda.jpg" },
-  { id: 3, title: "Angels & Demons", description: "A thriller by Dan Brown.", image_url: "/images/Angels&Demons.jpg" },
-  { id: 4, title: "Becoming", description: "A memoir by Michelle Obama.", image_url: "/images/Becoming.jpg" },
-  { id: 5, title: "Big Little Lies", description: "A mystery novel by Liane Moriarty.", image_url: "/images/BigLittleLies.jpg" },
-  { id: 6, title: "Desire", description: "A captivating romance novel.", image_url: "/images/Desire.jpg" },
-  { id: 7, title: "Dracula", description: "A horror classic by Bram Stoker.", image_url: "/images/Dracula.jpg" },
-  { id: 8, title: "Drama", description: "An emotional story about relationships.", image_url: "/images/Drama.jpg" },
-  { id: 9, title: "Dune", description: "A sci-fi epic by Frank Herbert.", image_url: "/images/Dune.jpg" },
-  { id: 10, title: "Educated", description: "A memoir by Tara Westover.", image_url: "/images/Educated.jpg" },
-  { id: 11, title: "Enchanted Forest", description: "A fantasy adventure novel.", image_url: "/images/EnchantedForest.jpg" },
-  { id: 12, title: "Fahrenheit 451", description: "A dystopian novel by Ray Bradbury.", image_url: "/images/Fahrenheit.jpg" },
-  { id: 13, title: "Fantasy", description: "An imaginative story set in another world.", image_url: "/images/Fantasy.jpg" },
-  { id: 14, title: "Fiction 2", description: "A captivating fictional story.", image_url: "/images/Fiction2.jpg" },
-  { id: 15, title: "Foundation", description: "A sci-fi classic by Isaac Asimov.", image_url: "/images/Foundation.jpg" },
-  { id: 16, title: "Frankenstein", description: "A gothic horror story by Mary Shelley.", image_url: "/images/Frankenstein.jpg" },
-  { id: 17, title: "Gory Details", description: "A collection of intriguing stories.", image_url: "/images/GoryDetails.jpg" },
-  { id: 18, title: "The Great Gatsby", description: "A classic novel by F. Scott Fitzgerald.", image_url: "/images/GreatGatsby.jpg" },
-  { id: 19, title: "Hamlet", description: "A tragedy by William Shakespeare.", image_url: "/images/Hamlet.jpg" },
-  { id: 20, title: "Harry Potter and the Throne", description: "A magical adventure.", image_url: "/images/HarryPotterThrone.jpg" },
-  { id: 21, title: "Horror", description: "A collection of spine-chilling tales.", image_url: "/images/Horror.jpg" },
-  { id: 22, title: "The Hound of the Baskervilles", description: "A Sherlock Holmes mystery by Arthur Conan Doyle.", image_url: "/images/Hound.jpg" },
-  { id: 23, title: "Humankind", description: "A book about human nature by Rutger Bregman.", image_url: "/images/Humankind.jpg" },
-  { id: 24, title: "Ice & Fire", description: "A tale of intrigue and power.", image_url: "/images/Ice&Fire.jpg" },
-  { id: 25, title: "Me Before You", description: "A romantic drama by Jojo Moyes.", image_url: "/images/MeBeforeYou.jpg" },
-  { id: 26, title: "Mystery", description: "A gripping tale full of suspense.", image_url: "/images/Mystery.jpg" },
-  { id: 27, title: "Neuromancer", description: "A cyberpunk novel by William Gibson.", image_url: "/images/Neuromancer.jpg" },
-  { id: 28, title: "New Novels", description: "A collection of contemporary fiction.", image_url: "/images/NewNovels.jpg" },
-  { id: 29, title: "Non-Fiction 2", description: "An insightful look into real events.", image_url: "/images/NonFiction2.jpg" },
-  { id: 30, title: "The Periodic Table", description: "A novel by Primo Levi.", image_url: "/images/PeriodicTables.jpg" },
-  { id: 31, title: "Pride and Prejudice", description: "A classic romance by Jane Austen.", image_url: "/images/Prejudice.jpg" },
-  { id: 32, title: "Romance", description: "A love story full of twists.", image_url: "/images/Romance.jpg" },
-  { id: 33, title: "Death of a Salesman", description: "A play by Arthur Miller.", image_url: "/images/Salesman.jpg" },
-  { id: 34, title: "Sci-Fi", description: "An imaginative science fiction tale.", image_url: "/images/Sci-Fi.jpg" },
-  { id: 35, title: "Scientific Mystery", description: "A suspenseful scientific adventure.", image_url: "/images/ScientificMystery.jpg" },
-  { id: 36, title: "Shadow", description: "A tale of secrets and betrayal.", image_url: "/images/Shadow.jpg" },
-  { id: 37, title: "The Silent Observer", description: "A story of quiet courage.", image_url: "/images/SilentObserver.jpg" },
-  { id: 38, title: "The Silent Patient", description: "A thriller by Alex Michaelides.", image_url: "/images/SilentPatient.jpg" },
-  { id: 39, title: "Strange Chemistry", description: "A science fiction novel.", image_url: "/images/StrangeChemistry.jpg" },
-  { id: 40, title: "The Notebook", description: "A romance novel by Nicholas Sparks.", image_url: "/images/TheNotebook.jpg" },
-  { id: 41, title: "The Awakening", description: "A classic by Kate Chopin.", image_url: "/images/TheAwakening.jpg" },
-  { id: 42, title: "The Shining", description: "A horror novel by Stephen King.", image_url: "/images/TheShining.jpg" },
-  { id: 43, title: "The Silent Observer", description: "A gripping mystery novel.", image_url: "/images/TheSilentObserver.jpg" },
-  { id: 44, title: "To Kill a Mockingbird", description: "A classic by Harper Lee.", image_url: "/images/TKAM.jpg" },
-  { id: 45, title: "Whispers in the Wind", description: "A hauntingly beautiful story.", image_url: "/images/WhispersWind.jpg" },
-];
-
-// Joi schema for book validation
-const bookSchema = Joi.object({
-  title: Joi.string().min(3).required(),
-  description: Joi.string().min(10).required(),
-  image_url: Joi.string().uri().required(),
+// Set up storage for image uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/images/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
 });
 
-// GET endpoint to retrieve books
+const upload = multer({ storage: storage });
+
+// Book data
+const books = [
+    {
+      _id: 1,
+      title: "1984",
+      description: "A dystopian novel by George Orwell",
+      main_image: "1984.jpg",
+    },
+    {
+      _id: 2,
+      title: "The Great Gatsby",
+      description: "A classic novel by F. Scott Fitzgerald",
+      main_image: "gatsby.jpg",
+    },
+    {
+      _id: 3,
+      title: "To Kill a Mockingbird",
+      description: "A novel by Harper Lee about racial injustice",
+      main_image: "mockingbird.jpg",
+    },
+    {
+      _id: 4,
+      title: "Moby Dick",
+      description: "A novel about a quest to hunt a giant whale",
+      main_image: "mobydick.jpg",
+    },
+    {
+      _id: 5,
+      title: "War and Peace",
+      description: "A historical novel by Leo Tolstoy",
+      main_image: "warandpeace.jpg",
+    },
+    {
+      _id: 6,
+      title: "Pride and Prejudice",
+      description: "A romantic novel by Jane Austen",
+      main_image: "prideandprejudice.jpg",
+    },
+    {
+      _id: 7,
+      title: "Crime and Punishment",
+      description: "A psychological novel by Fyodor Dostoevsky",
+      main_image: "crimeandpunishment.jpg",
+    },
+    {
+      _id: 8,
+      title: "Brave New World",
+      description: "A dystopian novel by Aldous Huxley",
+      main_image: "bravenewworld.jpg",
+    },
+    {
+      _id: 9,
+      title: "The Catcher in the Rye",
+      description: "A novel by J.D. Salinger",
+      main_image: "catcherintherye.jpg",
+    },
+    {
+      _id: 10,
+      title: "The Hobbit",
+      description: "A fantasy novel by J.R.R. Tolkien",
+      main_image: "hobbit.jpg",
+    },
+    {
+      _id: 11,
+      title: "Jane Eyre",
+      description: "A novel by Charlotte Bronte",
+      main_image: "janeeyre.jpg",
+    },
+    {
+      _id: 12,
+      title: "Wuthering Heights",
+      description: "A novel by Emily Bronte",
+      main_image: "wutheringheights.jpg",
+    },
+    {
+      _id: 13,
+      title: "The Odyssey",
+      description: "An epic poem attributed to Homer",
+      main_image: "odyssey.jpg",
+    },
+    {
+      _id: 14,
+      title: "The Iliad",
+      description: "An ancient Greek epic poem attributed to Homer",
+      main_image: "iliad.jpg",
+    },
+    {
+      _id: 15,
+      title: "Hamlet",
+      description: "A tragedy by William Shakespeare",
+      main_image: "hamlet.jpg",
+    },
+    {
+      _id: 16,
+      title: "The Divine Comedy",
+      description: "An epic poem by Dante Alighieri",
+      main_image: "divinecomedy.jpg",
+    },
+    {
+      _id: 17,
+      title: "The Brothers Karamazov",
+      description: "A novel by Fyodor Dostoevsky",
+      main_image: "karamazov.jpg",
+    },
+    {
+      _id: 18,
+      title: "The Count of Monte Cristo",
+      description: "A novel by Alexandre Dumas",
+      main_image: "montecristo.jpg",
+    },
+    {
+      _id: 19,
+      title: "The Picture of Dorian Gray",
+      description: "A novel by Oscar Wilde",
+      main_image: "doriangray.jpg",
+    },
+    {
+      _id: 20,
+      title: "The Scarlet Letter",
+      description: "A novel by Nathaniel Hawthorne",
+      main_image: "scarletletter.jpg",
+    },
+    {
+      _id: 21,
+      title: "Anna Karenina",
+      description: "A novel by Leo Tolstoy",
+      main_image: "annakarenina.jpg",
+    },
+    {
+      _id: 22,
+      title: "Don Quixote",
+      description: "A novel by Miguel de Cervantes",
+      main_image: "donquixote.jpg",
+    },
+    {
+      _id: 23,
+      title: "One Hundred Years of Solitude",
+      description: "A novel by Gabriel Garcia Marquez",
+      main_image: "solitude.jpg",
+    },
+    {
+      _id: 24,
+      title: "The Alchemist",
+      description: "A novel by Paulo Coelho",
+      main_image: "alchemist.jpg",
+    },
+    {
+      _id: 25,
+      title: "The Old Man and the Sea",
+      description: "A novel by Ernest Hemingway",
+      main_image: "oldmansea.jpg",
+    },
+    {
+      _id: 26,
+      title: "The Lord of the Rings",
+      description: "An epic fantasy novel by J.R.R. Tolkien",
+      main_image: "lotr.jpg",
+    },
+    {
+      _id: 27,
+      title: "Les Miserables",
+      description: "A novel by Victor Hugo",
+      main_image: "lesmiserables.jpg",
+    },
+    {
+      _id: 28,
+      title: "A Tale of Two Cities",
+      description: "A novel by Charles Dickens",
+      main_image: "taleoftwocities.jpg",
+    },
+    {
+      _id: 29,
+      title: "Alice's Adventures in Wonderland",
+      description: "A novel by Lewis Carroll",
+      main_image: "alice.jpg",
+    },
+    {
+      _id: 30,
+      title: "Heart of Darkness",
+      description: "A novel by Joseph Conrad",
+      main_image: "heartofdarkness.jpg",
+    },
+    {
+      _id: 31,
+      title: "Dracula",
+      description: "A horror novel by Bram Stoker",
+      main_image: "dracula.jpg",
+    },
+    {
+      _id: 32,
+      title: "Frankenstein",
+      description: "A novel by Mary Shelley",
+      main_image: "frankenstein.jpg",
+    },
+    {
+      _id: 33,
+      title: "The Call of the Wild",
+      description: "A novel by Jack London",
+      main_image: "callofthewild.jpg",
+    },
+    {
+      _id: 34,
+      title: "The Sun Also Rises",
+      description: "A novel by Ernest Hemingway",
+      main_image: "sunalsorises.jpg",
+    },
+    {
+      _id: 35,
+      title: "The Metamorphosis",
+      description: "A novella by Franz Kafka",
+      main_image: "metamorphosis.jpg",
+    },
+    {
+      _id: 36,
+      title: "Ulysses",
+      description: "A novel by James Joyce",
+      main_image: "ulysses.jpg",
+    },
+    {
+      _id: 37,
+      title: "Slaughterhouse-Five",
+      description: "A novel by Kurt Vonnegut",
+      main_image: "slaughterhousefive.jpg",
+    },
+    {
+      _id: 38,
+      title: "Catch-22",
+      description: "A novel by Joseph Heller",
+      main_image: "catch22.jpg",
+    },
+    {
+      _id: 39,
+      title: "The Catcher in the Rye",
+      description: "A novel by J.D. Salinger",
+      main_image: "catcherintherye.jpg",
+    },
+    {
+      _id: 40,
+      title: "Fahrenheit 451",
+      description: "A dystopian novel by Ray Bradbury",
+      main_image: "fahrenheit451.jpg",
+    },
+    {
+      _id: 41,
+      title: "Maus",
+      description: "A graphic novel by Art Spiegelman",
+      main_image: "maus.jpg",
+    },
+    {
+      _id: 42,
+      title: "Beloved",
+      description: "A novel by Toni Morrison",
+      main_image: "beloved.jpg",
+    },
+    {
+      _id: 43,
+      title: "The Road",
+      description: "A novel by Cormac McCarthy",
+      main_image: "theroad.jpg",
+    },
+    {
+      _id: 44,
+      title: "The Grapes of Wrath",
+      description: "A novel by John Steinbeck",
+      main_image: "grapesofwrath.jpg",
+    },
+    {
+      _id: 45,
+      title: "The Stranger",
+      description: "A novel by Albert Camus",
+      main_image: "thestranger.jpg",
+    },
+  ];  
+
+// Serve the main HTML file
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
+// Endpoint to get all books
 app.get("/api/books", (req, res) => {
   res.json(books);
 });
 
-// POST endpoint to add a new book with Joi validation
-app.post("/api/books", (req, res) => {
-  const { error } = bookSchema.validate(req.body);
+// Endpoint to add a new book
+app.post("/api/books", upload.single("image"), (req, res) => {
+  console.log("Received a POST request to add a book");
 
-  if (error) {
-    return res.status(400).json({ error: error.details[0].message });
+  // Validate request body
+  const result = validateBook(req.body);
+  if (result.error) {
+    res.status(400).send(result.error.details[0].message);
+    console.log("Validation error:", result.error.details[0].message);
+    return;
   }
 
-  const { title, description, image_url } = req.body;
-  const newBook = {
-    id: books.length + 1,
-    title,
-    description,
-    image_url,
+  // Create new book entry
+  const book = {
+    _id: books.length + 1, // Auto-generate a unique ID
+    title: req.body.title,
+    description: req.body.description,
   };
 
-  books.push(newBook);
-  res.status(201).json(newBook);
-});
-
-// Hard-coded route for adding a single book (for testing purposes)
-app.post("/api/books/hardcoded", (req, res) => {
-  const hardCodedBook = {
-    id: books.length + 1,
-    title: "The Catcher in the Rye",
-    description: "A classic novel by J.D. Salinger.",
-    image_url: "/images/CatcherInTheRye.jpg",
-  };
-
-  const { error } = bookSchema.validate(hardCodedBook);
-
-  if (error) {
-    return res.status(400).json({ error: error.details[0].message });
+  // Handle file upload
+  if (req.file) {
+    book.main_image = req.file.filename;
   }
 
-  books.push(hardCodedBook);
-  res.status(201).json(hardCodedBook);
+  // Add new book to the books array
+  books.push(book);
+
+  console.log("Added book:", book);
+  res.status(200).send(book);
 });
+
+// Validation schema for book entries
+const validateBook = (book) => {
+  const schema = Joi.object({
+    title: Joi.string().min(3).required(),
+    description: Joi.string().min(5).required(),
+  });
+
+  return schema.validate(book);
+};
 
 // Start the server
+const PORT = process.env.PORT || 3001;
+// Start the server
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}/api/books`);
-});
+    console.log(`Server running on http://localhost:${PORT}/api/books`);
+  });
