@@ -298,7 +298,7 @@ const books = [
     _id: 45,
     title: "The Stranger",
     description: "A novel by Albert Camus",
-    main_image: "https://my-library-backend-jd7n.onrender.com/images/thestranger.jpg",
+    main_image: "images/thestranger.jpg",
   },
 ]; 
 
