@@ -3,7 +3,11 @@
     "name": "my-library-app",
     "version": "0.1.0",
     "private": false,
+    "main": "index.js",
     "web-vitals": "^2.1.4",
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
     "scripts": {
         "predeploy": "npm run build",
         "deploy": "gh-pages -d build",
@@ -38,6 +42,8 @@
         "express": "^4.21.1",
         "install": "^0.13.0",
         "joi": "^17.13.3",
-        "multer": "^1.4.5-lts.1"
+        "multer": "^1.4.5-lts.1",
+        "react-dom": "^18.3.1",
+        "react-scripts": "^5.0.1"
     }
 }
