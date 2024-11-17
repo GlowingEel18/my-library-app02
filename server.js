@@ -3,11 +3,11 @@ const cors = require("cors");
 const app = express();
 const Joi = require("joi");
 const multer = require("multer");
-const path = require("path");
-
-app.use(cors());
-app.use(express.json()); // Parse JSON bodies for POST requests
 app.use(express.static("public"));
+app.use("/uploads", express.static("uploads"));
+app.use(express.json());
+app.use(cors());
+
 
 // Set up storage for image uploads
 const storage = multer.diskStorage({
@@ -19,7 +19,14 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer(
+  { 
+    storage: storage 
+  }, 
+  {
+    limits: { fileSize: 50 * 1024 * 1024 } // 50 MB
+  }
+);
 
 // Book data
 const books = [
@@ -308,51 +315,12 @@ app.get("/api/books", (req, res) => {
   console.log('returning ', books.length);
 });
 
-// Endpoint to add a new book
-// app.post("/api/books", upload.single("image"), (req, res) => {
-//   console.log("Received a POST request to add a book");
-
-// Endpoint to add a new book
-// app.post("/api/books", upload.single("image"), (req, res) => {
-//   console.log("Received a POST request to add a book");
-
-//   // Validate request body
-//   const result = validateBook(req.body);
-//   if (result.error) {
-//     res.status(400).send(result.error.details[0].message);
-//     console.log("Validation error:", result.error.details[0].message);
-//     return;
-//   }
-
-//   // Create new book entry
-//   const book = {
-//     _id: books.length + 1, // Auto-generate a unique ID
-//     title: req.body.title,
-//     description: req.body.description,
-//   };
-
-//   // Handle file upload
-//   if (req.file) {
-//     book.image = req.file.filename;
-//   }
-
-//   // Add new book to the books array
-//   books.push(book);
-
-//   console.log("Added book:", book);
-//   res.status(200).send(book);
-// });
-
-//FIXME 
 // Upload Endpoint That will accept files
-app.post("/api/books", (req, res) => {
-
-  console.log('Inside Post method');
-  console.log(req.files);
- 
-  // Check if file is not available return message with status 400.
+app.post("/api/books", upload.single("img"), (req, res) => {
+  
+  console.log('Req Body: ', req.body);
   // Validate request body
-  if (req.files === null) {
+  if (req.files === null || req.files === 'undefined') {
     return res.status(400).json({ msg: "No file uploaded" });
   }
  
@@ -363,39 +331,33 @@ app.post("/api/books", (req, res) => {
     return res.status(400).json({ msg: result.error.details[0].message });
   }
 
-  const file = req.files.file;
-  // We need unique file name to save it in folder and then use filename to access it. I have replace space with - and concatinated file name with Date String. We can also used uuid package as well.
-  const fileName = `${file.name.replaceAll(" ", "-")}`;
   // Create new book entry
   const book = {
     _id: books.length + 1, // Auto-generate a unique ID
     title: req.body.title,
-    description: req.body.description,
-    image: fileName,
+    description: req.body.description
+    
   };
-  // // Handle file upload
-  // if (req.file) {
-  //    book.image = fileName;
-  // }
-  // Add book to the books array
+
+  //Handle file name
+  if (req.body.image) {
+     book.main_image = "images/"+ req.body.image;
+  }
+  
+  //Add book to the books array
   books.push(book);
   console.log("Added book:", JSON.stringify(book));
-  // This line of code will save our file in public/images folder in our
-  //appliction and will retrun err if any error found if no error found then return pathname of file.
-  file.mv(`${__dirname}/public/images/${fileName}`, (err) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-    res.status(200).send(book);
-  });
+  res.status(200).send(book);
 });
-//UPTO 
+
 
 // Validation schema for book entries
 const validateBook = (book) => {
   const schema = Joi.object({
+    _id: Joi.allow(""),
     title: Joi.string().min(3).required(),
     description: Joi.string().min(5).required(),
+    image: Joi.allow(""),
   });
   return schema.validate(book);
 };
