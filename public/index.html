@@ -2,26 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <script src="server.js"></script>
-  <title>My Library API - Project Part 9</title>
+  <title>Add a New Book</title>
 </head>
 <body>
-  <header>
-    <h1>My Library API</h1>
-    <p>Welcome to the Library Backend API. Use this page to explore available API endpoints and retrieve data on books in our collection.</p>
-  </header>
+  <h1>Add a New Book</h1>
+  <form id="bookForm" enctype="multipart/form-data">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required><br><br>
 
-  <main>
-    <section>
-      <h2>Endpoints</h2>
-      <div class="endpoint">
-        <p><strong>Get All Books:</strong></p>
-        <p>Retrieve a list of all available books in JSON format.</p>
-        <a href="/api/books">View All Books</a>
-      </div>
-    </section>
-  </main>
+    <label for="author">Author:</label>
+    <input type="text" id="author" name="author" required><br><br>
+
+    <label for="genre">Genre:</label>
+    <input type="text" id="genre" name="genre" required><br><br>
+
+    <label for="year">Year:</label>
+    <input type="number" id="year" name="year" required><br><br>
+
+    <label for="description">Description:</label><br>
+    <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
+
+    <label for="cover_image">Cover Image:</label>
+    <input type="file" id="cover_image" name="cover_image"><br><br>
+
+    <button type="submit">Add Book</button>
+  </form>
+
+  <script>
+    document.getElementById('bookForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const formData = new FormData(this);
+
+      fetch('http://localhost:3001/api/books', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Book added successfully!');
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        alert('Error adding book.');
+        console.error('Error:', error);
+      });
+    });
+  </script>
 </body>
 </html>

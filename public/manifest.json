@@ -1,22 +1,21 @@
 {
-    "name": "Library Webpage Program",
-    "short_name": "LibraryApp",
-    "description": "Your one-stop solution for finding fiction and non-fiction books across various genres.",
-    "start_url": ".",
-    "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#ff0000",
-    "icons": [
-      {
-        "src": "images/NonFiction2.jpg",
-        "sizes": "192x192",
-        "type": "image/png"
-      },
-      {
-        "src": "images/icon-512x512.png",
-        "sizes": "512x512",
-        "type": "image/png"
-      }
-    ]
-  }
-  
+  "name": "Library Webpage Program",
+  "short_name": "LibraryApp",
+  "description": "Your one-stop solution for finding fiction and non-fiction books across various genres.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff0000",
+  "icons": [
+    {
+      "src": "images/NonFiction2.jpg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
