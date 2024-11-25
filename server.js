@@ -20,9 +20,9 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer(
-  { 
-    storage: storage 
-  }, 
+  {
+    storage: storage
+  },
   {
     limits: { fileSize: 50 * 1024 * 1024 } // 50 MB
   }
@@ -294,7 +294,7 @@ const books = [
     description: "A novel by Albert Camus",
     main_image: "images/thestranger.jpg",
   },
-]; 
+];
 
 // Serve the main HTML file
 app.get("/", (req, res) => {
@@ -311,13 +311,13 @@ app.get("/api/books", (req, res) => {
 
 // Upload Endpoint That will accept files
 app.post("/api/books", upload.single("img"), (req, res) => {
-  
+
   console.log('Req Body: ', req.body);
   // Validate request body
   if (req.files === null || req.files === 'undefined') {
     return res.status(400).json({ msg: "No file uploaded" });
   }
- 
+
   //JOI Validation
   const result = validateBook(req.body);
   if (result.error) {
@@ -330,20 +330,56 @@ app.post("/api/books", upload.single("img"), (req, res) => {
     _id: books.length + 1, // Auto-generate a unique ID
     title: req.body.title,
     description: req.body.description
-    
   };
 
   //Handle file name
   if (req.body.image) {
      book.main_image = "images/"+ req.body.image;
   }
-  
   //Add book to the books array
   books.push(book);
   console.log("Added book:", JSON.stringify(book));
   res.status(200).send(book);
 });
 
+
+//PUT
+app.put("/api/books/:id", upload.single("img"), (req, res) => {
+  let book = books.find((h) => h._id === parseInt(req.params.id));
+
+  if (!book) res.status(400).send("Book with given id was not found");
+
+  const result = validateBook(req.body);
+
+  if (result.error) {
+    res.status(400).send(result.error.details[0].message);
+    return;
+  }
+
+  book.title = req.body.title;
+  book.description = req.body.description;
+
+  if (req.file) {
+    book.main_image = "images/" + req.file.image;
+  }
+
+  res.send(book);
+});
+
+
+
+//DELETE
+app.delete("/api/houses/:id", (req, res) => {
+  const book = books.find((h) => h._id === parseInt(req.params.id));
+
+  if (!book) {
+    res.status(404).send("The book with the given id was not found");
+  }
+
+  const index = books.indexOf(book);
+  books.splice(index, 1);
+  res.send(book);
+});
 
 // Validation schema for book entries
 const validateBook = (book) => {
