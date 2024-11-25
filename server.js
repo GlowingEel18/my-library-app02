@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 const Joi = require("joi");
 const multer = require("multer");
+const path = require('path');
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
 app.use(express.json());
