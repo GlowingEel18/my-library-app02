@@ -397,5 +397,5 @@ const validateBook = (book) => {
 const PORT = process.env.PORT || 3001;
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}/api/books`);
+    console.log(`Server running on http://localhost:${3001}/api/books`);
 });
