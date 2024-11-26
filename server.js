@@ -119,7 +119,7 @@ const books = [
     _id: 15,
     title: "Hamlet",
     description: "A tragedy by William Shakespeare",
-    main_image: "images/hamlet.jpg",
+    main_image: "images/Hamlet.jpg",
   },
   {
     _id: 16,
@@ -370,7 +370,7 @@ app.put("/api/books/:id", upload.single("img"), (req, res) => {
 
 
 //DELETE
-app.delete("/api/houses/:id", (req, res) => {
+app.delete("/api/books/:id", (req, res) => {
   const book = books.find((h) => h._id === parseInt(req.params.id));
 
   if (!book) {
