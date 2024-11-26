@@ -119,7 +119,7 @@ const books = [
     _id: 15,
     title: "Hamlet",
     description: "A tragedy by William Shakespeare",
-    main_image: "images/Hamlet.jpg",
+    main_image: "images/hamlet.jpg",
   },
   {
     _id: 16,
@@ -397,5 +397,5 @@ const validateBook = (book) => {
 const PORT = process.env.PORT || 3001;
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${3001}/api/books`);
+    console.log(`Server running on http://localhost:${PORT}/api/books`);
 });
