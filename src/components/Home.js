@@ -10,7 +10,7 @@ const Home = () => {
     const fetchBooks = async () => {
       try {
         const response = await axios.get(
-          "https://my-library-backend-scms.onrender.com/api/books"
+          "https://my-library-backend-latest.onrender.com/api/books"
         );
         setBooks(response.data); // Set the fetched data to the books state
       } catch (error) {
