@@ -3,7 +3,7 @@ const cors = require("cors");
 const app = express();
 const Joi = require("joi");
 const multer = require("multer");
-const path = require('path');
+
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
 app.use(express.json());
@@ -20,14 +20,11 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer(
-  {
-    storage: storage
-  },
-  {
-    limits: { fileSize: 50 * 1024 * 1024 } // 50 MB
-  }
-);
+const upload = multer({ storage: storage });
+
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
 
 // Book data
 const books = [
@@ -91,217 +88,9 @@ const books = [
     description: "A fantasy novel by J.R.R. Tolkien",
     main_image: "images/hobbit.jpg",
   },
-  {
-    _id: 11,
-    title: "Jane Eyre",
-    description: "A novel by Charlotte Bronte",
-    main_image: "images/janeeyre.jpg",
-  },
-  {
-    _id: 12,
-    title: "Wuthering Heights",
-    description: "A novel by Emily Bronte",
-    main_image: "images/wutheringheights.jpg",
-  },
-  {
-    _id: 13,
-    title: "The Odyssey",
-    description: "An epic poem attributed to Homer",
-    main_image: "images/odyssey.jpg",
-  },
-  {
-    _id: 14,
-    title: "The Iliad",
-    description: "An ancient Greek epic poem attributed to Homer",
-    main_image: "images/iliad.jpg",
-  },
-  {
-    _id: 15,
-    title: "Hamlet",
-    description: "A tragedy by William Shakespeare",
-    main_image: "images/hamlet.jpg",
-  },
-  {
-    _id: 16,
-    title: "The Divine Comedy",
-    description: "An epic poem by Dante Alighieri",
-    main_image: "images/divinecomedy.jpg",
-  },
-  {
-    _id: 17,
-    title: "The Brothers Karamazov",
-    description: "A novel by Fyodor Dostoevsky",
-    main_image: "images/karamazov.jpg",
-  },
-  {
-    _id: 18,
-    title: "The Count of Monte Cristo",
-    description: "A novel by Alexandre Dumas",
-    main_image: "images/montecristo.jpg",
-  },
-  {
-    _id: 19,
-    title: "The Picture of Dorian Gray",
-    description: "A novel by Oscar Wilde",
-    main_image: "images/doriangray.jpg",
-  },
-  {
-    _id: 20,
-    title: "The Scarlet Letter",
-    description: "A novel by Nathaniel Hawthorne",
-    main_image: "images/scarletletter.jpg",
-  },
-  {
-    _id: 21,
-    title: "Anna Karenina",
-    description: "A novel by Leo Tolstoy",
-    main_image: "images/annakarenina.jpg",
-  },
-  {
-    _id: 22,
-    title: "Don Quixote",
-    description: "A novel by Miguel de Cervantes",
-    main_image: "images/donquixote.jpg",
-  },
-  {
-    _id: 23,
-    title: "One Hundred Years of Solitude",
-    description: "A novel by Gabriel Garcia Marquez",
-    main_image: "images/solitude.jpg",
-  },
-  {
-    _id: 24,
-    title: "The Alchemist",
-    description: "A novel by Paulo Coelho",
-    main_image: "images/alchemist.jpg",
-  },
-  {
-    _id: 25,
-    title: "The Old Man and the Sea",
-    description: "A novel by Ernest Hemingway",
-    main_image: "images/oldmansea.jpg",
-  },
-  {
-    _id: 26,
-    title: "The Lord of the Rings",
-    description: "An epic fantasy novel by J.R.R. Tolkien",
-    main_image: "images/lotr.jpg",
-  },
-  {
-    _id: 27,
-    title: "Les Miserables",
-    description: "A novel by Victor Hugo",
-    main_image: "images/lesmiserables.jpg",
-  },
-  {
-    _id: 28,
-    title: "A Tale of Two Cities",
-    description: "A novel by Charles Dickens",
-    main_image: "images/taleoftwocities.jpg",
-  },
-  {
-    _id: 29,
-    title: "Alice's Adventures in Wonderland",
-    description: "A novel by Lewis Carroll",
-    main_image: "images/alice.jpg",
-  },
-  {
-    _id: 30,
-    title: "Heart of Darkness",
-    description: "A novel by Joseph Conrad",
-    main_image: "images/heartofdarkness.jpg",
-  },
-  {
-    _id: 31,
-    title: "Dracula",
-    description: "A horror novel by Bram Stoker",
-    main_image: "images/dracula.jpg",
-  },
-  {
-    _id: 32,
-    title: "Frankenstein",
-    description: "A novel by Mary Shelley",
-    main_image: "images/frankenstein.jpg",
-  },
-  {
-    _id: 33,
-    title: "The Call of the Wild",
-    description: "A novel by Jack London",
-    main_image: "images/callofthewild.jpg",
-  },
-  {
-    _id: 34,
-    title: "The Sun Also Rises",
-    description: "A novel by Ernest Hemingway",
-    main_image: "images/sunalsorises.jpg",
-  },
-  {
-    _id: 35,
-    title: "The Metamorphosis",
-    description: "A novella by Franz Kafka",
-    main_image: "images/metamorphosis.jpg",
-  },
-  {
-    _id: 36,
-    title: "Ulysses",
-    description: "A novel by James Joyce",
-    main_image: "images/ulysses.jpg",
-  },
-  {
-    _id: 37,
-    title: "Slaughterhouse-Five",
-    description: "A novel by Kurt Vonnegut",
-    main_image: "images/slaughterhousefive.jpg",
-  },
-  {
-    _id: 38,
-    title: "Catch-22",
-    description: "A novel by Joseph Heller",
-    main_image: "images/catch22.jpg",
-  },
-  {
-    _id: 39,
-    title: "Fahrenheit 451",
-    description: "A dystopian novel by Ray Bradbury",
-    main_image: "images/fahrenheit451.jpg",
-  },
-  {
-    _id: 40,
-    title: "Maus",
-    description: "A graphic novel by Art Spiegelman",
-    main_image: "images/maus.jpg",
-  },
-  {
-    _id: 41,
-    title: "Beloved",
-    description: "A novel by Toni Morrison",
-    main_image: "images/beloved.jpg",
-  },
-  {
-    _id: 42,
-    title: "The Road",
-    description: "A novel by Cormac McCarthy",
-    main_image: "images/theroad.jpg",
-  },
-  {
-    _id: 43,
-    title: "The Grapes of Wrath",
-    description: "A novel by John Steinbeck",
-    main_image: "images/grapesofwrath.jpg",
-  },
-  {
-    _id: 44,
-    title: "The Stranger",
-    description: "A novel by Albert Camus",
-    main_image: "images/thestranger.jpg",
-  },
+
 ];
 
-// Serve the main HTML file
-app.get("/", (req, res) => {
-  console.log('returning  hello world');
-  res.sendFile(path.join(__dirname, "index.html"));
-});
 
 // Endpoint to get all books
 app.get("/api/books", (req, res) => {
@@ -312,12 +101,6 @@ app.get("/api/books", (req, res) => {
 
 // Upload Endpoint That will accept files
 app.post("/api/books", upload.single("img"), (req, res) => {
-
-  console.log('Req Body: ', req.body);
-  // Validate request body
-  if (req.files === null || req.files === 'undefined') {
-    return res.status(400).json({ msg: "No file uploaded" });
-  }
 
   //JOI Validation
   const result = validateBook(req.body);
@@ -334,18 +117,19 @@ app.post("/api/books", upload.single("img"), (req, res) => {
   };
 
   //Handle file name
-  if (req.body.image) {
-     book.main_image = "images/"+ req.body.image;
+  if (req.file) {
+     book.main_image = "images/" + req.file.filename;
   }
   //Add book to the books array
   books.push(book);
-  console.log("Added book:", JSON.stringify(book));
+  //console.log("Added book:", JSON.stringify(book));
   res.status(200).send(book);
 });
 
 
 //PUT
 app.put("/api/books/:id", upload.single("img"), (req, res) => {
+
   let book = books.find((h) => h._id === parseInt(req.params.id));
 
   if (!book) res.status(400).send("Book with given id was not found");
@@ -353,6 +137,7 @@ app.put("/api/books/:id", upload.single("img"), (req, res) => {
   const result = validateBook(req.body);
 
   if (result.error) {
+    console.log('This is the rejected field ->', result.error.field);
     res.status(400).send(result.error.details[0].message);
     return;
   }
@@ -361,13 +146,11 @@ app.put("/api/books/:id", upload.single("img"), (req, res) => {
   book.description = req.body.description;
 
   if (req.file) {
-    book.main_image = "images/" + req.file.image;
+    book.main_image = "images/" + req.file.filename;
   }
-
+  console.log('book: ', JSON.stringify(book));
   res.send(book);
 });
-
-
 
 //DELETE
 app.delete("/api/books/:id", (req, res) => {
@@ -388,7 +171,7 @@ const validateBook = (book) => {
     _id: Joi.allow(""),
     title: Joi.string().min(3).required(),
     description: Joi.string().min(5).required(),
-    image: Joi.allow(""),
+    main_image: Joi.allow(""),
   });
   return schema.validate(book);
 };
